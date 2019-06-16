@@ -16,11 +16,11 @@ ruleTester.run("sort-exports/sort-exports", rule, {
     },
     {
       code: "export function bar() {}; export function Foo() {};",
-      options: ["asc", { ignoreCase: true }],
+      options: [{ sortDir: "asc", ignoreCase: true }],
     },
     {
       code: "export function foo() {}; export function bar() {};",
-      options: ["desc"],
+      options: [{ sortDir: "desc" }],
     },
     {
       code:
@@ -28,7 +28,7 @@ ruleTester.run("sort-exports/sort-exports", rule, {
     },
     {
       code: "export function bar() {}; export function Foo() {};",
-      options: ["desc", { ignoreCase: false }],
+      options: [{ sortDir: "desc", ignoreCase: false }],
     },
     {
       code: 'export const a="123"; export const b="3";',
@@ -47,7 +47,7 @@ ruleTester.run("sort-exports/sort-exports", rule, {
   invalid: [
     {
       code: "export function bar() {}; export function Foo() {};",
-      options: ["asc", { ignoreCase: false }],
+      options: [{ ignoreCase: false }],
       errors: ["Expected Foo before bar"],
     },
     {
@@ -57,6 +57,7 @@ ruleTester.run("sort-exports/sort-exports", rule, {
     },
     {
       code: "export function d() {}; export function c() {};",
+      options: [{ sortDir: "asc" }],
       errors: ["Expected c before d"],
     },
     {

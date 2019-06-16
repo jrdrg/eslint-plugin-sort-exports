@@ -26,7 +26,7 @@ Add `sort-exports` to the plugins section of your `.eslintrc` and configure the 
 {
     "plugins": ["sort-exports"],
     "rules": {
-        "sort-exports/sort-exports": ["error", ["asc"]]
+        "sort-exports/sort-exports": ["error", {"sortDir": "asc"}]
     }
 }
 ```
@@ -43,17 +43,12 @@ sort-exports
 {
     "sort-exports/sort-exports": [
         "error",
-        "asc",
-        { ignoreCase: true }
+        { sortDir: "asc", ignoreCase: true }
     ]
 }
 ```
 
-The first option can be either `asc` or `desc`
+Options can be any of the following properties:
 
-- `asc` (default): Sort exports in ascending order.
-- `desc`: Sort exports in descending order.
-
-The second option is an object with the following properties:
-
+- `sortDir`: Can be either `asc` (default) or `desc` signifying ascending or descending sort order, respectively.
 - `ignoreCase`: If true, sorting is case-insensitive.
