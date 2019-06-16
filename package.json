@@ -13,12 +13,18 @@
   "devDependencies": {
     "@typescript-eslint/parser": "^1.10.2",
     "eslint": "^5.16.0",
+    "husky": "^2.4.1",
     "jest": "^24.8.0",
     "lint-staged": "^8.2.1",
     "prettier": "^1.18.2"
   },
   "peerDependencies": {
     "eslint": ">=5.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "lint-staged": {
     "*.js": "eslint ."
