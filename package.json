@@ -10,6 +10,10 @@
     "test": "jest",
     "format": "prettier --write \"./lib/*.js\" \"./test/*.js\""
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jrdrg/eslint-plugin-sort-exports.git"
+  },
   "devDependencies": {
     "@typescript-eslint/parser": "^1.10.2",
     "eslint": "^5.16.0",
