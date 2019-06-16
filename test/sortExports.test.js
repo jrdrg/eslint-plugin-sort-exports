@@ -62,8 +62,8 @@ ruleTester.run("sort-exports/sort-exports", rule, {
     },
     {
       code:
-        "export function b() {}; export function d() {}; export function c() {};",
-      errors: ["Expected c before d"],
+        "export function b() {}; export function d() {}; export function c() {}; export function f() {}; export function e() {};",
+      errors: ["Expected c before d", "Expected e before f"],
     },
     {
       code: 'export const b="123"; export function a() {}',
