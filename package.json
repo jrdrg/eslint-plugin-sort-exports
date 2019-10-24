@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-sort-exports",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Sort ES6 exports",
   "main": "lib/index.js",
   "author": "jrdrg",
