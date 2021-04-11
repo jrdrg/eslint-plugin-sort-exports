@@ -1,4 +1,5 @@
 module.exports = {
-    trailingComma: 'all',
-    tabWidth: 2
-}
+  arrowParens: "always",
+  trailingComma: "all",
+  tabWidth: 2,
+};
