@@ -43,7 +43,7 @@ ruleTester.run("sort-exports/sort-exports", rule, {
       code: 'export {a, b, c} from "foo"',
     },
     {
-      code: 'export {a} from "foo"; export function b() {};',
+      code: 'export {a, c} from "foo"; export function b() {};',
     },
     {
       code: 'export * from "bar"; export * from "foo";',
@@ -90,6 +90,10 @@ ruleTester.run("sort-exports/sort-exports", rule, {
     {
       code: 'export * from "foo"; export * from "bar";',
       errors: ["Expected bar before foo"],
+    },
+    {
+      code: 'export {Icon} from "./Icon"; export {Button} from "./Button";',
+      errors: ["Expected Button before Icon"],
     },
   ],
 });
