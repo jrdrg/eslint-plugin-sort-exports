@@ -45,6 +45,9 @@ ruleTester.run("sort-exports/sort-exports", rule, {
     {
       code: 'export {a} from "foo"; export function b() {};',
     },
+    {
+      code: 'export * from "bar"; export * from "foo";',
+    },
   ],
 
   invalid: [
@@ -83,6 +86,10 @@ ruleTester.run("sort-exports/sort-exports", rule, {
     {
       code: 'export {a, c, b} from "foo"',
       errors: ["Expected b before c"],
+    },
+    {
+      code: 'export * from "foo"; export * from "bar";',
+      errors: ["Expected bar before foo"],
     },
   ],
 });
