@@ -43,7 +43,7 @@ sort-exports
 {
     "sort-exports/sort-exports": [
         "error",
-        { sortDir: "asc", ignoreCase: true }
+        { sortDir: "asc", ignoreCase: true, sortExportKindFirst: "type" }
     ]
 }
 ```
@@ -52,3 +52,4 @@ Options can be any of the following properties:
 
 - `sortDir`: Can be either `asc` (default) or `desc` signifying ascending or descending sort order, respectively.
 - `ignoreCase`: If true, sorting is case-insensitive.
+- `sortExportKindFirst`: Can be `type`, `value`, or `none`. Determines whether `export` or `export type` are sorted first, if not `none`.
