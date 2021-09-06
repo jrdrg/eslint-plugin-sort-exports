@@ -3,6 +3,7 @@ const rule = require("../lib/sortExports");
 const RuleTester = require("eslint").RuleTester;
 
 const ruleTester = new RuleTester({
+  parser: require.resolve("@typescript-eslint/parser"),
   parserOptions: {
     ecmaVersion: 6,
     sourceType: "module",
@@ -40,6 +41,9 @@ ruleTester.run("sort-exports/sort-exports", rule, {
       code: 'export {a, b} from "foo"',
     },
     {
+      code: "const a=1; const b=2; export {a, b};",
+    },
+    {
       code: 'export {a, b, c} from "foo"',
     },
     {
@@ -47,6 +51,20 @@ ruleTester.run("sort-exports/sort-exports", rule, {
     },
     {
       code: 'export * from "bar"; export * from "foo";',
+    },
+    {
+      code: "export type {Bar}; export {Foo};",
+    },
+    {
+      code: "export type {Bar}; export {Baz}; export type {Foo};",
+    },
+    {
+      code: "export type {Bar}; export type {Foo}; export {Baz};",
+      options: [{ sortExportKindFirst: "type" }],
+    },
+    {
+      code: "export {Baz}; export type {Bar}; export type {Foo};",
+      options: [{ sortExportKindFirst: "value" }],
     },
   ],
 
@@ -94,6 +112,35 @@ ruleTester.run("sort-exports/sort-exports", rule, {
     {
       code: 'export {Icon} from "./Icon"; export {Button} from "./Button";',
       errors: ["Expected Button before Icon"],
+    },
+    {
+      code: "export type {Foo}; export {Bar};",
+      errors: ["Expected Bar before Foo"],
+    },
+    {
+      code: "export type {Foo}; export {Bar};",
+      options: [{ sortExportKindFirst: "none" }],
+      errors: ["Expected Bar before Foo"],
+    },
+    {
+      code: "export type {Foo}; export type {Bar}; export {Baz};",
+      options: [{ sortExportKindFirst: "type" }],
+      errors: ["Expected Bar before Foo"],
+    },
+    {
+      code: "export type {Bar}; export {Baz}; export type {Foo};",
+      options: [{ sortExportKindFirst: "type" }],
+      errors: ["Expected Foo before Baz"],
+    },
+    {
+      code: "export type {Bar}; export {Baz}; export type {Foo};",
+      options: [{ sortExportKindFirst: "value" }],
+      errors: ["Expected Baz before Bar"],
+    },
+    {
+      code: "export type {Bar}; export {Baz}; export type {Foo}; export {foo}",
+      options: [{ sortExportKindFirst: "value" }],
+      errors: ["Expected Baz before Bar", "Expected foo before Foo"],
     },
   ],
 });
