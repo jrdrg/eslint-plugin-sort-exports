@@ -66,6 +66,10 @@ ruleTester.run("sort-exports/sort-exports", rule, {
       code: "export {Baz}; export type {Bar}; export type {Foo};",
       options: [{ sortExportKindFirst: "value" }],
     },
+    {
+      code: "export {}",
+      options: [{ ignoreCase: true }],
+    },
   ],
 
   invalid: [
