@@ -70,6 +70,9 @@ ruleTester.run("sort-exports/sort-exports", rule, {
       code: "export {}",
       options: [{ ignoreCase: true }],
     },
+    {
+      code: "\n",
+    },
   ],
 
   invalid: [
@@ -77,74 +80,112 @@ ruleTester.run("sort-exports/sort-exports", rule, {
       code: "export function bar() {}; export function Foo() {};",
       options: [{ ignoreCase: false }],
       errors: ["Expected Foo before bar"],
+      output: "export function Foo() {}; export function bar() {};",
     },
     {
       code:
         'export const b="1"; export function a() {}; export function c() {};',
       errors: ["Expected a before b"],
+      output:
+        'export function a() {} export const b="1";; export function c() {};',
     },
     {
       code: "export function d() {}; export function c() {};",
       options: [{ sortDir: "asc" }],
       errors: ["Expected c before d"],
+      output: "export function c() {}; export function d() {};",
     },
     {
       code:
         "export function b() {}; export function d() {}; export function c() {}; export function f() {}; export function e() {};",
       errors: ["Expected c before d", "Expected e before f"],
+      output:
+        "export function b() {}; export function c() {}; export function d() {}; export function e() {}; export function f() {};",
     },
     {
       code: 'export const b="123"; export function a() {}',
       errors: ["Expected a before b"],
+      output: 'export function a() {} export const b="123";',
     },
     {
       code: 'export const b="123"; export const a="3";',
       errors: ["Expected a before b"],
+      output: 'export const a="3"; export const b="123";',
     },
     {
       code: 'export {b, a} from "foo"',
       errors: ["Expected a before b"],
+      output: 'export {a, b} from "foo"',
     },
     {
       code: 'export {a, c, b} from "foo"',
       errors: ["Expected b before c"],
+      output: 'export {a, b, c} from "foo"',
     },
     {
       code: 'export * from "foo"; export * from "bar";',
       errors: ["Expected bar before foo"],
+      output: 'export * from "bar"; export * from "foo";',
     },
     {
       code: 'export {Icon} from "./Icon"; export {Button} from "./Button";',
       errors: ["Expected Button before Icon"],
+      output: 'export {Button} from "./Button"; export {Icon} from "./Icon";',
     },
     {
-      code: "export type {Foo}; export {Bar};",
+      code: "const Abc=3; export type {Foo}; export {Bar};",
       errors: ["Expected Bar before Foo"],
+      output: "const Abc=3; export {Bar}; export type {Foo};",
     },
     {
       code: "export type {Foo}; export {Bar};",
       options: [{ sortExportKindFirst: "none" }],
       errors: ["Expected Bar before Foo"],
+      output: "export {Bar}; export type {Foo};",
     },
     {
       code: "export type {Foo}; export type {Bar}; export {Baz};",
       options: [{ sortExportKindFirst: "type" }],
       errors: ["Expected Bar before Foo"],
+      output: "export type {Bar}; export type {Foo}; export {Baz};",
     },
     {
       code: "export type {Bar}; export {Baz}; export type {Foo};",
       options: [{ sortExportKindFirst: "type" }],
       errors: ["Expected Foo before Baz"],
+      output: "export type {Bar}; export type {Foo}; export {Baz};",
     },
     {
       code: "export type {Bar}; export {Baz}; export type {Foo};",
       options: [{ sortExportKindFirst: "value" }],
       errors: ["Expected Baz before Bar"],
+      output: "export {Baz}; export type {Bar}; export type {Foo};",
     },
     {
-      code: "export type {Bar}; export {Baz}; export type {Foo}; export {foo}",
+      code: "export type {Bar}; export {Baz}; export type {Foo}; export {foo};",
       options: [{ sortExportKindFirst: "value" }],
       errors: ["Expected Baz before Bar", "Expected foo before Foo"],
+      output:
+        "export {Baz}; export type {Bar}; export {foo}; export type {Foo};",
+    },
+    {
+      code: "export {Baz}; export type {Bar}; export {foo}; export type {Foo};",
+      options: [{ sortExportKindFirst: "value" }],
+      errors: ["Expected foo before Bar"],
+      output:
+        "export {Baz}; export {foo}; export type {Bar}; export type {Foo};",
+    },
+    {
+      code: "const y=3; const Z=3; export { y, Z };",
+      options: [{ sortExportKindFirst: "value" }],
+      errors: ["Expected Z before y"],
+      output: "const y=3; const Z=3; export { Z, y };",
+    },
+    {
+      code: "export { Z, y };",
+      options: [{ sortDir: "desc", ignoreCase: false }],
+      errors: ["Expected y before Z"],
+      output: "export { y, Z };",
     },
   ],
 });
