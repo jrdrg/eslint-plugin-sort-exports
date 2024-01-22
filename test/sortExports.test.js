@@ -73,6 +73,11 @@ ruleTester.run("sort-exports/sort-exports", rule, {
     //   {
     //     code: "\n",
     //   },
+    // {
+    //   filename: 'someOtherFilename.js',
+    //   code: "const y=3; const Z=3; export { y, Z };",
+    //   options: [{ sortExportKindFirst: "value", pattern: 'index.js' }],
+    // }
   ],
 
   invalid: [
@@ -226,6 +231,13 @@ ruleTester.run("sort-exports/sort-exports", rule, {
       // comment 2
       export { Z };
       `,
+    },
+    {
+      filename: 'index.js',
+      code: "export function bar() {}; export function Foo() {};",
+      options: [{ ignoreCase: false, pattern: 'index.js' }],
+      errors: ["Expected Foo before bar"],
+      output: "export function Foo() {}; export function bar() {};",
     },
   ],
 });
